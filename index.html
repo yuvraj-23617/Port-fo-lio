@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Yuvraj Verma — SWEAI / Product Engineer</title>
-<meta name="description" (content="Yuvraj Verma — B.Tech Computer Science & Biosciences (CS major, Comp Bio minor), IIIT-Delhi. Software engineer & AI/ML builder. Distributed systems, async pipelines, and graph-based ML. Open to SWEAI / Product roles, 2026.">
+<meta name="description" content="Yuvraj Verma — B.Tech Computer Science & Biosciences (CS major, Comp Bio minor), IIIT-Delhi. Software engineer & AI/ML builder. Distributed systems, async pipelines, and graph-based ML. Open to SWEAI / Product roles, 2026.">
 <meta name="theme-color" content="#07090d">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,7 +38,7 @@
 
 :root{
   --ink:#d8e4ec;
-  --dim:#5f7688;
+  --dim:#6d8496; 
   --line:rgba(120,180,200,.14);
   --line-2:rgba(0,229,255,.24);
   --pad:clamp(18px,4.2vw,68px);
@@ -81,6 +81,39 @@ body{
 .rails::before{left:calc(var(--pad) - 8px)}
 .rails::after{right:calc(var(--pad) - 8px)}
 @media(max-width:900px){.rails::before,.rails::after{display:none}}
+
+/* ============================================================
+   BACKGROUND TEXT GRADIENT — small mono text that scrolls with
+   the page and fades into the theme.
+   ============================================================ */
+.bgtype{
+  position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+  opacity:.6;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 15%,#000 74%,transparent 100%);
+  mask-image:linear-gradient(to bottom,transparent 0%,#000 15%,#000 74%,transparent 100%);
+}
+.bgtype-inner{
+  position:absolute;top:0;left:0;width:100%;
+  will-change:transform;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+  -webkit-background-clip:text;
+  background-clip:text;
+}
+.bgtype-inner p{
+  font-family:var(--mono);
+  font-size:11px;
+  font-weight:400;
+  line-height:26px;
+  letter-spacing:.3em;
+  white-space:nowrap;
+  text-transform:uppercase;
+  margin:0;
+}
+@media(max-width:640px){
+  .bgtype{opacity:.42}
+  .bgtype-inner p{font-size:9.5px;line-height:26px;letter-spacing:.22em}
+}
 
 /* ============================================================
    PIXEL MARK — stepped triangle motif (SVG mask)
@@ -236,6 +269,27 @@ html.js .nav{opacity:0;transform:translateY(-16px)}
 main{position:relative;z-index:1}
 section{padding:clamp(74px,12vh,170px) var(--pad);border-top:1px solid var(--line);position:relative;scroll-margin-top:70px}
 section::before{content:'';position:absolute;top:0;left:var(--pad);width:60px;height:1px;background:var(--acc);opacity:.6}
+
+/* ═══════════════════════════════════════════════════════════════
+   TRANSLUCENT SECTION PANEL — footer-style frosted glass behind
+   the section text, so the fixed bg type reads through it.
+   ═══════════════════════════════════════════════════════════════ */
+   .section-glass{
+  background:rgba(var(--bg-rgb),.18);
+  backdrop-filter:blur(3px) saturate(1.05);
+  -webkit-backdrop-filter:blur(3px) saturate(1.05);
+}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .section-glass{background:rgba(var(--bg-rgb),.68)}
+}
+@media(max-width:640px){
+  .section-glass{
+    background:rgba(var(--bg-rgb),.5);
+    backdrop-filter:blur(6px) saturate(1.05);
+    -webkit-backdrop-filter:blur(6px) saturate(1.05);
+  }
+}
+
 .sec-head{display:flex;align-items:center;gap:18px;margin-bottom:clamp(34px,6.5vh,80px)}
 .sec-idx{font-size:11px;color:var(--acc);letter-spacing:.18em;font-weight:500}
 .sec-rule{flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
@@ -247,10 +301,50 @@ section::before{content:'';position:absolute;top:0;left:var(--pad);width:60px;he
   mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 6' shape-rendering='crispEdges'><rect x='6' y='0' width='4' height='1.04'/><rect x='4' y='1' width='8' height='1.04'/><rect x='14' y='1' width='3' height='1.04'/><rect x='3' y='2' width='14' height='1.04'/><rect x='1' y='3' width='17' height='1.04'/><rect x='0' y='4' width='20' height='1.04'/><rect x='1' y='5' width='18' height='1.04' opacity='.4'/></svg>") center/contain no-repeat;
 }
 .sec-ghost{position:absolute;top:clamp(34px,6vh,66px);right:var(--pad);font-weight:700;font-size:clamp(4rem,13vw,11rem);
-  line-height:1;color:transparent;-webkit-text-stroke:1px rgba(var(--acc-rgb),.14);pointer-events:none;user-select:none;font-family:var(--mono)}
+  line-height:1;color:transparent;-webkit-text-stroke:1px rgba(var(--acc-rgb),.20);pointer-events:none;user-select:none;font-family:var(--mono)}
 .h2{font-weight:700;text-transform:uppercase;font-size:clamp(1.85rem,4.8vw,4.2rem);line-height:1.02;letter-spacing:.01em}
 .kicker{font-size:11px;color:var(--dim);margin-bottom:22px;line-height:1.8;letter-spacing:.14em;text-transform:uppercase}
 .kicker b{color:var(--acc);font-weight:400}
+
+/* ═══════════════════════════════════════════════════════════════
+   TRANSLUCENT GHOST TYPE — footer-style outline, reusable
+   ═══════════════════════════════════════════════════════════════ */
+.ghost{
+  color:transparent;
+  -webkit-text-stroke:1px rgba(var(--acc-rgb),.42);
+}
+.ghost-ink{
+  color:transparent;
+  -webkit-text-stroke:1px rgba(216,228,236,.34);
+}
+@supports not (-webkit-text-stroke:1px #000){
+  .ghost{color:rgba(var(--acc-rgb),.34)}
+  .ghost-ink{color:rgba(216,228,236,.28)}
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   OVERSIZED SECTION LEAD
+   ═══════════════════════════════════════════════════════════════ */
+.kicker-xl{
+  font-family:var(--disp);
+  font-weight:700;
+  text-transform:uppercase;
+  font-size:clamp(1.3rem,3.5vw,2.9rem);
+  line-height:1.08;
+  letter-spacing:.005em;
+  color:var(--dim);
+  max-width:36ch;
+  margin:-4px 0 clamp(34px,5.5vh,62px);
+}
+.kicker-xl b{color:var(--acc);font-weight:400;margin-right:.35em}
+.kicker-xl .serif{color:var(--acc);font-size:1.05em}
+.kicker-xl .ghost{
+  -webkit-text-stroke:1.2px rgba(var(--acc-rgb),.46);
+}
+@media(max-width:640px){
+  .kicker-xl{font-size:clamp(1.1rem,6.2vw,1.7rem);line-height:1.14;max-width:none;margin-bottom:30px}
+}
+
 .ln{display:block;overflow:hidden}
 .lni{display:inline-block;will-change:transform}
 html.js .lni{transform:translateY(114%)}
@@ -272,7 +366,7 @@ html.js .hero-topline,html.js .avail,html.js .hero-sub,html.js .hero-cta,html.js
 .hero-title{font-weight:700;text-transform:uppercase;line-height:.88;letter-spacing:.005em;
   font-size:clamp(3rem,12vw,12rem);margin-bottom:4.5vh}
 .hero-title .serif-line{color:var(--acc);font-size:.98em}
-.hero-title .outline{color:transparent;-webkit-text-stroke:1.5px var(--ink)}
+.hero-title .outline{color:transparent;-webkit-text-stroke:1.5px rgba(216,228,236,.45)}
 .hero-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:end;margin-bottom:6vh}
 .hero-sub{max-width:54ch;color:var(--dim);font-size:clamp(.95rem,1.15vw,1.06rem)}
 .hero-sub strong{color:var(--ink);font-weight:600}
@@ -474,7 +568,7 @@ html.js .hero-topline,html.js .avail,html.js .hero-sub,html.js .hero-cta,html.js
 /* ================= CONTACT ================= */
 .contact-big{font-weight:700;text-transform:uppercase;font-size:clamp(2.1rem,8vw,7rem);line-height:.96;letter-spacing:.005em;margin-bottom:36px}
 .contact-big .serif{color:var(--acc);font-size:1.06em}
-.contact-big .outline{color:transparent;-webkit-text-stroke:1.4px var(--ink)}
+.contact-big .outline{color:transparent;-webkit-text-stroke:1.4px rgba(var(--acc-rgb),.52)}
 .lead{color:var(--dim);max-width:60ch;font-size:clamp(.95rem,1.2vw,1.08rem);margin-bottom:40px}
 .email-line{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px 20px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:26px 0;margin-bottom:48px}
 .email-line .lbl{font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.16em}
@@ -569,6 +663,8 @@ footer{border-top:1px solid var(--line);padding:56px var(--pad) 28px;position:re
 </style>
 </head>
 <body>
+
+<div class="bgtype" id="bgType" aria-hidden="true"><div class="bgtype-inner"></div></div>
 
 <div class="rails" aria-hidden="true"></div>
 
@@ -672,7 +768,7 @@ footer{border-top:1px solid var(--line);padding:56px var(--pad) 28px;position:re
 
 <div class="marquee" aria-hidden="true"><div class="mq-track" id="mq1"></div></div>
 
-<section id="about">
+<section id="about" class="section-glass">
   <span class="sec-ghost">01</span>
   <div class="sec-head"><span class="sec-idx mono">01</span><span class="sec-rule"></span><span class="sec-label mono">ABOUT</span></div>
   <div class="about-grid">
@@ -712,7 +808,7 @@ footer{border-top:1px solid var(--line);padding:56px var(--pad) 28px;position:re
   </div>
 </section>
 
-<section id="process">
+<section id="process" class="section-glass">
   <span class="sec-ghost">02</span>
   <div class="sec-head"><span class="sec-idx mono">02</span><span class="sec-rule"></span><span class="sec-label mono">HOW I BUILD</span></div>
   <h2 class="h2" data-lines>
@@ -745,10 +841,10 @@ footer{border-top:1px solid var(--line);padding:56px var(--pad) 28px;position:re
   </div>
 </section>
 
-<section id="work">
+<section id="work" class="section-glass">
   <span class="sec-ghost">03</span>
   <div class="sec-head"><span class="sec-idx mono">03</span><span class="sec-rule"></span><span class="sec-label mono">CODE &amp; PROJECTS</span></div>
-  <p class="kicker mono" data-fade><b>/</b> THREE REPOS THAT BEST SHOW HOW I ENGINEER — BACKEND SYSTEMS, ML, AND MODELLING.</p>
+  <p class="kicker-xl" data-fade><b>/</b> Three projects that <span class="ghost">best show how I engineer</span> — backend systems, ML, and modelling.</p>
 
   <div class="work-list">
     <a class="work" href="https://github.com/yuvraj-23617/lightgcn-hybrid-recommender" target="_blank" rel="noopener" data-project="0" data-cursor="OPEN ↗">
@@ -800,7 +896,7 @@ footer{border-top:1px solid var(--line);padding:56px var(--pad) 28px;position:re
   <div class="scan"></div>
 </div>
 
-<section id="case-study">
+<section id="case-study" class="section-glass">
   <span class="sec-ghost">04</span>
   <div class="sec-head"><span class="sec-idx mono">04</span><span class="sec-rule"></span><span class="sec-label mono">CASE STUDY · 01</span></div>
   <div class="cs-grid">
@@ -839,7 +935,7 @@ footer{border-top:1px solid var(--line);padding:56px var(--pad) 28px;position:re
   </div>
 </section>
 
-<section id="case-study-2">
+<section id="case-study-2" class="section-glass">
   <span class="sec-ghost">05</span>
   <div class="sec-head"><span class="sec-idx mono">05</span><span class="sec-rule"></span><span class="sec-label mono">CASE STUDY · 02</span></div>
   <div class="cs-grid">
@@ -878,15 +974,15 @@ footer{border-top:1px solid var(--line);padding:56px var(--pad) 28px;position:re
   </div>
 </section>
 
-<section id="experience">
+<section id="experience" class="section-glass">
   <span class="sec-ghost">06</span>
   <div class="sec-head"><span class="sec-idx mono">06</span><span class="sec-rule"></span><span class="sec-label mono">EXPERIENCE</span></div>
-  <p class="kicker mono" data-fade><b>/</b> REVERSE CHRONOLOGICAL, AFTER THE DEGREE — WHERE I'VE PUT IN THE REPS.</p>
+  <p class="kicker-xl" data-fade><b>/</b> Newest first — the teams, roles, and <span class="ghost">shipped work</span> behind the transcript.</p>
 
   <article class="xp" data-fade>
     <div class="xp-top"><span class="xp-date mono">2023 — 2027</span><span class="xp-tag mono">EDUCATION</span>
       <h4 class="xp-role">B.Tech — Computer Science &amp; Biosciences</h4><span class="xp-org mono">IIIT-DELHI · CS MAJOR / COMP BIO MINOR</span></div>
-    <p class="xp-desc"><p class="xp-desc">A Computer Science major with a Computational Biology minor. Relevant coursework: <strong>Data Structures & Algorithms, Advanced Programming, Operating Systems, Computer Organisation, Database Management Systems, Collaborative Filtering</strong>.</p>
+    <p class="xp-desc">A Computer Science major with a Computational Biology minor. Relevant coursework: <strong>Data Structures & Algorithms, Advanced Programming, Operating Systems, Computer Organisation, Database Management Systems, Collaborative Filtering</strong>.</p>
   </article>
 
   <article class="xp" data-fade>
@@ -1085,6 +1181,72 @@ function fillMq(el, words){
 }
 fillMq(document.getElementById('mq1'), mq1);
 fillMq(document.getElementById('mq2'), mq2);
+
+/* ================= BACKGROUND TEXT GRADIENT ================= */
+(function(){
+  const wrap  = document.getElementById('bgType');
+  if(!wrap) return;
+  const inner = wrap.querySelector('.bgtype-inner');
+  if(!inner) return;
+
+  const TOK = [
+    'ASYNC PIPELINES','SANDBOXED EXECUTION','GRAPH-BASED ML','LIGHTGCN PROPAGATION',
+    'SBERT SEMANTIC MATCH','RABBITMQ WORKER','DOCKER SANDBOX','SPRING BOOT API',
+    'POSTGRESQL PENDING','NDCG@10 +3.2%','HR@10 0.80','128MB / 0.5 CPU',
+    'PYTHON · JAVA · C++','UNTRUSTED CODE','PROSPECT QUALIFICATION','5× SPONSORSHIP',
+    'CS MAJOR / COMP BIO MINOR','IIIT-DELHI · 2023—2027','ONE HTML FILE','NO BUILD STEP',
+    'OPEN TO SWEAI / PRODUCT — 2026','DELHI · IST','CODE, SYSTEMS, PEOPLE'
+  ];
+
+  const LINE_H = 26;
+  const SPEED  = 0.4;
+  let oneH = 1, lastY = -1;
+
+  function build(){
+    const vh = window.innerHeight || 800;
+    const n  = Math.ceil((vh + LINE_H * 2) / LINE_H);
+    let html = '';
+
+    for(let i = 0; i < n; i++){
+      const parts = [];
+      for(let j = 0; j < 9; j++) parts.push(TOK[(i * 5 + j * 3) % TOK.length]);
+      const indent = (i * 37) % 130;
+      html += '<p style="padding-left:calc(var(--pad) + ' + indent + 'px)">' + parts.join(' · ') + '</p>';
+    }
+
+    inner.innerHTML = html + html;
+    oneH = Math.max(1, Math.round(inner.scrollHeight / 2));
+
+    inner.style.backgroundImage =
+      'repeating-linear-gradient(180deg,' +
+      'rgba(var(--acc-rgb),.40) 0px,' +
+      'rgba(var(--acc-rgb),.11) ' + Math.round(oneH * 0.40) + 'px,' +
+      'rgba(var(--acc-rgb),.04) ' + Math.round(oneH * 0.50) + 'px,' +
+      'rgba(var(--acc-rgb),.11) ' + Math.round(oneH * 0.60) + 'px,' +
+      'rgba(var(--acc-rgb),.40) ' + oneH + 'px)';
+
+    lastY = -1;
+  }
+
+  function frame(){
+    const y = window.pageYOffset || document.documentElement.scrollTop || 0;
+    if(y !== lastY){
+      lastY = y;
+      const off = (y * SPEED) % oneH;
+      inner.style.transform = 'translate3d(0,' + (-off).toFixed(2) + 'px,0)';
+    }
+    requestAnimationFrame(frame);
+  }
+
+  build();
+  requestAnimationFrame(frame);
+
+  let rt;
+  window.addEventListener('resize', function(){
+    clearTimeout(rt);
+    rt = setTimeout(build, 180);
+  }, { passive: true });
+})();
 
 /* ================= CLOCK ================= */
 function tick(){
